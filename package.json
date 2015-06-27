@@ -1,0 +1,29 @@
+{
+  "name": "jade-to-handlebars",
+  "version": "0.0.0",
+  "description": "convert jade templates to handlebars templates",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tape test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kesla/jade-to-handlebars.git"
+  },
+  "author": "David Björklund <david.bjorklund@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kesla/jade-to-handlebars/issues"
+  },
+  "homepage": "https://github.com/kesla/jade-to-handlebars#readme",
+  "dependencies": {
+    "jade": "^1.11.0"
+  },
+  "devDependencies": {
+    "handlebars": "^3.0.3",
+    "tape": "^4.0.0"
+  }
+}
