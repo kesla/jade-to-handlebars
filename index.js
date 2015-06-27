@@ -2,6 +2,7 @@
 
 var lex = require('jade-lexer');
 var parse = require('jade-parser');
+var selfClosing = require('void-elements');
 
 module.exports = function (input) {
   var ast = parse(lex(input));
@@ -23,6 +24,10 @@ function tag (obj) {
   var attrs = normalizeAttrs(obj).map(function (attr) {
     return attr.name + '=' + attr.val.replace(/\'/g, '"');
   }).join(' ');
+
+  if (selfClosing[obj.name]) {
+    return '<' + (obj.name + ' ' + attrs).trim() + '/>';
+  }
 
   return '<' + (obj.name + ' ' + attrs).trim() + '></' + obj.name + '>';
 }
