@@ -18,6 +18,10 @@ function walk (obj) {
   if (obj.type === 'Tag') {
     return tag(obj);
   }
+
+  if (obj.type === 'Text') {
+    return obj.val;
+  }
 }
 
 function tag (obj) {
