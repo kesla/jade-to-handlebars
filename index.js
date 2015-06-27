@@ -22,7 +22,9 @@ function walk (obj) {
 
 function tag (obj) {
   var attrs = normalizeAttrs(obj).map(function (attr) {
-    return attr.name + '=' + attr.val.replace(/\'/g, '"');
+    var val = attr.escaped ? attr.val : attr.val.replace(/\'/g, '"');
+
+    return attr.name + '=' + val;
   }).join(' ');
 
   if (selfClosing[obj.name]) {
