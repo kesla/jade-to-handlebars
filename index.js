@@ -45,7 +45,7 @@ function tag (obj) {
 }
 
 function normalizeAttrs (obj) {
-  var klass;
+  var classes = [];
   var id;
   var attrs = obj.attrs.filter(function (attr) {
     if (attr.name === 'id') {
@@ -53,7 +53,7 @@ function normalizeAttrs (obj) {
       return false;
     }
     if (attr.name === 'class') {
-      klass = attr;
+      classes.push(attr);
       return false;
     }
     return true;
@@ -63,8 +63,15 @@ function normalizeAttrs (obj) {
     attrs.unshift(id);
   }
 
-  if (klass) {
-    attrs.push(klass);
+  if (classes.length) {
+    attrs.push({
+      name: 'class',
+      val: '"' + classes.map(function (klass) {
+        return klass.val.slice(1, -1);
+      }).join(' ') + '"',
+      escaped: false
+    });
   }
+
   return attrs;
 }
