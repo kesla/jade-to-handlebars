@@ -20,13 +20,17 @@ function walk (obj) {
   }
 
   if (obj.type === 'Text') {
-    return obj.val;
+    return obj.val.replace(/#{([^}]+)}/g, '{{$1}}');
   }
 }
 
 function tag (obj) {
   var attrs = normalizeAttrs(obj).map(function (attr) {
     var val = attr.escaped ? attr.val : attr.val.replace(/\'/g, '"');
+
+    if (!/^".+"$/.test(val)) {
+      val = '"{{' + val +'}}"';
+    }
 
     return attr.name + '=' + val;
   }).join(' ');
