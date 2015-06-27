@@ -29,7 +29,9 @@ function tag (obj) {
     return '<' + (obj.name + ' ' + attrs).trim() + '/>';
   }
 
-  return '<' + (obj.name + ' ' + attrs).trim() + '></' + obj.name + '>';
+  return '<' + (obj.name + ' ' + attrs).trim() + '>' +
+    walk(obj.block) +
+    '</' + obj.name + '>';
 }
 
 function normalizeAttrs (obj) {
