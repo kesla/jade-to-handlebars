@@ -1,7 +1,53 @@
 'use strict';
 
-var jade = require('jade');
+var lex = require('jade-lexer');
+var parse = require('jade-parser');
 
 module.exports = function (input) {
-  return ''
+  var ast = parse(lex(input));
+
+  return walk(ast);
 };
+
+function walk (obj) {
+  if (obj.type === 'Block') {
+    return obj.nodes.map(walk).join('');
+  }
+
+  if (obj.type === 'Tag') {
+    return tag(obj);
+  }
+}
+
+function tag (obj) {
+  var attrs = normalizeAttrs(obj).map(function (attr) {
+    return attr.name + '=' + attr.val.replace(/\'/g, '"');
+  }).join(' ');
+
+  return '<' + (obj.name + ' ' + attrs).trim() + '></' + obj.name + '>';
+}
+
+function normalizeAttrs (obj) {
+  var klass;
+  var id;
+  var attrs = obj.attrs.filter(function (attr) {
+    if (attr.name === 'id') {
+      id = attr;
+      return false;
+    }
+    if (attr.name === 'class') {
+      klass = attr;
+      return false;
+    }
+    return true;
+  });
+
+  if (id) {
+    attrs.unshift(id);
+  }
+
+  if (klass) {
+    attrs.push(klass);
+  }
+  return attrs;
+}
