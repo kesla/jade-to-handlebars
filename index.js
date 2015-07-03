@@ -11,26 +11,51 @@ module.exports = function (input, opts) {
   var html = walk(ast);
 
   return (opts && opts.pretty) ? beautify(html, { indent_size: 2 }) : html;
+
+  function walk (obj) {
+    if (obj.type === 'Block') {
+      return obj.nodes.map(walk).join('');
+    }
+
+    if (obj.type === 'Tag') {
+      return tag(obj);
+    }
+
+    if (obj.type === 'Text') {
+      return text(obj);
+    }
+
+    if (obj.type === 'Include') {
+      return '<!-- TODO: Fix unsupported jade include -->\n' +
+        'include ' + obj.file.path + '\n';
+    }
+
+    throw new Error(
+      'Unsupported node, type ' + obj.type +
+        (opts && opts.filename ? ' in ' + opts.filename : '')
+    );
+  }
+
+  function tag (obj) {
+    var attrs = normalizeAttrs(obj).map(function (attr) {
+      var val = attr.escaped ? attr.val : attr.val.replace(/\'/g, '"');
+
+      if (!/^".+"$/.test(val)) {
+        val = '"{{' + val +'}}"';
+      }
+
+      return attr.name + '=' + val;
+    }).join(' ');
+
+    if (selfClosing[obj.name]) {
+      return '<' + (obj.name + ' ' + attrs).trim() + '/>';
+    }
+
+    return '<' + (obj.name + ' ' + attrs).trim() + '>' +
+      walk(obj.block) +
+      '</' + obj.name + '>';
+  }
 };
-
-function walk (obj) {
-  if (obj.type === 'Block') {
-    return obj.nodes.map(walk).join('');
-  }
-
-  if (obj.type === 'Tag') {
-    return tag(obj);
-  }
-
-  if (obj.type === 'Text') {
-    return text(obj);
-  }
-
-  if (obj.type === 'Include') {
-    return '<!-- TODO: Fix unsupported jade include -->\n' +
-      'include ' + obj.file.path + '\n';
-  }
-}
 
 function text (obj) {
   var result = obj.val.replace(/#{([^}]+)}/g, '{{$1}}');
@@ -40,26 +65,6 @@ function text (obj) {
   }
 
   return result;
-}
-
-function tag (obj) {
-  var attrs = normalizeAttrs(obj).map(function (attr) {
-    var val = attr.escaped ? attr.val : attr.val.replace(/\'/g, '"');
-
-    if (!/^".+"$/.test(val)) {
-      val = '"{{' + val +'}}"';
-    }
-
-    return attr.name + '=' + val;
-  }).join(' ');
-
-  if (selfClosing[obj.name]) {
-    return '<' + (obj.name + ' ' + attrs).trim() + '/>';
-  }
-
-  return '<' + (obj.name + ' ' + attrs).trim() + '>' +
-    walk(obj.block) +
-    '</' + obj.name + '>';
 }
 
 function normalizeAttrs (obj) {
