@@ -3,11 +3,14 @@
 var lex = require('jade-lexer');
 var parse = require('jade-parser');
 var selfClosing = require('void-elements');
+var beautify = require('js-beautify').html;
 
-module.exports = function (input) {
+module.exports = function (input, opts) {
   var ast = parse(lex(input));
 
-  return walk(ast);
+  var html = walk(ast);
+
+  return (opts && opts.pretty) ? beautify(html, { indent_size: 2 }) : html;
 };
 
 function walk (obj) {

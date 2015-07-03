@@ -8,5 +8,5 @@ var path = require('path');
 glob.sync('**/*.jade').forEach(function (jadeFilename) {
   var handlebarsName = jadeFilename.slice(0, -4) + 'hbs';
   var file = fs.readFileSync(jadeFilename, 'utf8');
-  fs.writeFile(handlebarsName, toHandlebars(file));
+  fs.writeFile(handlebarsName, toHandlebars(file, { pretty: true }));
 });
