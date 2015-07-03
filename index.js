@@ -44,6 +44,20 @@ module.exports = function (input, opts) {
         '{{/each}}'
     }
 
+    if (obj.type === 'BlockComment') {
+      if (obj.buffer) {
+        return '<!--' + body(obj) + '-->';
+      }
+      return '{{!-- ' + body(obj) + '--}}';
+    }
+
+    if (obj.type === 'Comment') {
+      if (obj.buffer) {
+        return '<!--' + obj.val + '-->';
+      }
+      return '{{!-- ' + obj.val + '--}}';
+    }
+
     throw new Error(
       'Unsupported node, type ' + obj.type +
         (opts && opts.filename ? ' in ' + opts.filename : '')
