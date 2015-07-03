@@ -38,6 +38,12 @@ module.exports = function (input, opts) {
       return mixin(obj);
     }
 
+    if (obj.type === 'Each') {
+      return '{{#each ' + obj.obj + ' as |' + obj.val + '|}}' +
+        body(obj) +
+        '{{/each}}'
+    }
+
     throw new Error(
       'Unsupported node, type ' + obj.type +
         (opts && opts.filename ? ' in ' + opts.filename : '')

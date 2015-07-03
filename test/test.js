@@ -16,14 +16,7 @@ fs.readdirSync(__dirname + '/templates')
     return path.basename(filename, '.jade');
   })
   .forEach(function (name) {
-    test(name + '(pretty = false)', function (t) {
-      var locals = getLocals(name);
-      var expected = getExpected(name, locals);
-      t.equal(runInHandlebars(name, locals), expected);
-      t.end();
-    });
-
-    test(name + '(pretty = true)', function (t) {
+    test(name, function (t) {
       var locals = getLocals(name);
       var expected = getExpected(name, locals);
       t.equal(
@@ -47,9 +40,9 @@ function getLocals (name) {
   return {};
 }
 
-function runInHandlebars (name, locals, opts) {
+function runInHandlebars (name, locals) {
   var input = fs.readFileSync(__dirname + '/templates/' + name + '.jade', 'utf8');
-  return handlebars.compile(toHandlebars(input, opts))(locals);
+  return handlebars.compile(toHandlebars(input))(locals);
 }
 
 function runInJade (name, locals) {
