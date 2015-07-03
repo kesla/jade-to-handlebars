@@ -9,6 +9,9 @@
   "scripts": {
     "test": "tape test/test.js"
   },
+  "bin": {
+    "jade-to-handlebars": "./bin/jade-to-handlebars.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kesla/jade-to-handlebars.git"
@@ -20,6 +23,7 @@
   },
   "homepage": "https://github.com/kesla/jade-to-handlebars#readme",
   "dependencies": {
+    "glob": "^5.0.11",
     "jade-lexer": "0.0.8",
     "jade-parser": "0.0.8",
     "void-elements": "^2.0.1"
