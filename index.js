@@ -23,8 +23,23 @@ function walk (obj) {
   }
 
   if (obj.type === 'Text') {
-    return obj.val.replace(/#{([^}]+)}/g, '{{$1}}');
+    return text(obj);
   }
+
+  if (obj.type === 'Include') {
+    return '<!-- TODO: Fix unsupported jade include -->\n' +
+      'include ' + obj.file.path + '\n';
+  }
+}
+
+function text (obj) {
+  var result = obj.val.replace(/#{([^}]+)}/g, '{{$1}}');
+
+  if (/\!\{.+\}/.test(obj.val)) {
+    result = '<!-- TODO: Fix unsupported jade inline javascript -->\n' + result;
+  }
+
+  return result;
 }
 
 function tag (obj) {
