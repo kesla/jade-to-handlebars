@@ -1,5 +1,6 @@
 {
   "src": "image.jpg",
   "body": "Hello, world!",
-  "foo": "bar"
+  "foo": "bar",
+  "code": "kod"
 }

@@ -30,6 +30,10 @@ module.exports = function (input, opts) {
         'include ' + obj.file.path + '\n';
     }
 
+    if (obj.type === 'Code') {
+      return '{{' + obj.val + '}}';
+    }
+
     throw new Error(
       'Unsupported node, type ' + obj.type +
         (opts && opts.filename ? ' in ' + opts.filename : '')
@@ -51,8 +55,10 @@ module.exports = function (input, opts) {
       return '<' + (obj.name + ' ' + attrs).trim() + '/>';
     }
 
+    var body = obj.code ? walk(obj.code) : walk(obj.block);
+
     return '<' + (obj.name + ' ' + attrs).trim() + '>' +
-      walk(obj.block) +
+      body +
       '</' + obj.name + '>';
   }
 };
