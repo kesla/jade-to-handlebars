@@ -10,7 +10,7 @@ module.exports = function (input, opts) {
 
   var html = walk(ast);
 
-  return (opts && opts.pretty) ? beautify(html, { indent_size: 2 }) : html;
+  return beautify(html, { indent_size: 2 });
 
   function walk (obj) {
     if (obj.type === 'Block') {
