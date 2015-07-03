@@ -34,10 +34,31 @@ module.exports = function (input, opts) {
       return '{{' + obj.val + '}}';
     }
 
+    if (obj.type === 'Mixin') {
+      return mixin(obj);
+    }
+
     throw new Error(
       'Unsupported node, type ' + obj.type +
         (opts && opts.filename ? ' in ' + opts.filename : '')
     );
+  }
+
+  function mixin (obj) {
+    return '<!-- TODO: Fix unsupported jade mixin -->\n' +
+      'mixin ' + obj.name + '(' + obj.args + ')' + '\n' +
+      body(obj);
+  }
+
+  function body (obj) {
+    if (obj.code) {
+      return walk(obj.code);
+    }
+    if (obj.block) {
+      return walk(obj.block);
+    }
+
+    return '';
   }
 
   function tag (obj) {
@@ -55,10 +76,9 @@ module.exports = function (input, opts) {
       return '<' + (obj.name + ' ' + attrs).trim() + '/>';
     }
 
-    var body = obj.code ? walk(obj.code) : walk(obj.block);
 
     return '<' + (obj.name + ' ' + attrs).trim() + '>' +
-      body +
+      body(obj) +
       '</' + obj.name + '>';
   }
 };
