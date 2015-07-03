@@ -27,7 +27,7 @@ fs.readdirSync(__dirname + '/templates')
       var locals = getLocals(name);
       var expected = getExpected(name, locals);
       t.equal(
-        runInHandlebars(name, locals, { pretty: true}),
+        beautify(runInHandlebars(name, locals), { indent_size: 2}),
         beautify(expected, { indent_size: 2 })
       );
       t.end();
