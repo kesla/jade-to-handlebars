@@ -10,5 +10,8 @@ module.exports = function (input, opts) {
 
   var html = walk(opts, ast);
 
-  return beautify(html, { indent_size: 2 });
+  return beautify(html, {
+    indent_size: 2,
+    indent_handlebars: true
+  });
 };
