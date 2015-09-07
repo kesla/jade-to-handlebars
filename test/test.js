@@ -46,5 +46,6 @@ function runInHandlebars (name, locals) {
 }
 
 function runInJade (name, locals) {
+  locals.doctype = 'html';
   return jade.renderFile(__dirname + '/templates/' + name + '.jade', locals);
 }
