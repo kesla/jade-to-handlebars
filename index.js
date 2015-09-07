@@ -7,7 +7,6 @@ var walk = require('./lib/walk');
 
 module.exports = function (input, opts) {
   var ast = parse(lex(input));
-
   var html = walk(opts, ast);
 
   return beautify(html, {

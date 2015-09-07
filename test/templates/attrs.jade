@@ -1,1 +1,21 @@
+#foo
+.bar
+div(class="bar" + postfix)
+
+p.beep#boop(data-foo="bar" name="name")
+span.klass#id
+span#id.klass
+span(a='a' b='b')
+span(data-foo="'bar'")
+span(data-bar='"foo"')
+.one.two.three
+.one.two(class="three")
+.one.two(id="id")
+.one(beep="boop" id="id" hello="world")
+#id.one.two
+span(data-beep="1" data-boop="2")
+span(data-boop="2" data-beep="1")
 img(src='image.png')
+img(class=prefix + "-"+ middle +'-' + postfix)
+span(data-whatever=prefix + "-"+ middle +'-' + postfix)
+i.hello(class="icon " + postfix)
