@@ -5,7 +5,7 @@ Convert jade templates to their corresponding handlebars version.
 ## Install
 
 ```shell
-npm install jade-to-handlebars
+npm install -g jade-to-handlebars
 ```
 
 ## Usage
