@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "tape test/test.js"
+    "test": "tape test/test.js && semistandard | snazzy"
   },
   "bin": {
     "jade-to-handlebars": "./bin/jade-to-handlebars.js"
@@ -32,6 +32,8 @@
   "devDependencies": {
     "handlebars": "^3.0.3",
     "jade": "^1.11.0",
+    "semistandard": "^7.0.5",
+    "snazzy": "^3.0.0",
     "tape": "^4.0.0"
   }
 }

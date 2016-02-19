@@ -3,7 +3,6 @@
 var toHandlebars = require('../');
 var glob = require('glob');
 var fs = require('fs');
-var path = require('path');
 
 glob.sync('**/*.jade').forEach(function (jadeFilename) {
   var handlebarsName = jadeFilename.slice(0, -4) + 'hbs';

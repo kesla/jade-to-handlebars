@@ -20,7 +20,7 @@ fs.readdirSync(__dirname + '/templates')
       var locals = getLocals(name);
       var expected = getExpected(name, locals);
       t.equal(
-        beautify(runInHandlebars(name, locals), { indent_size: 2}),
+        beautify(runInHandlebars(name, locals), {indent_size: 2}),
         beautify(expected, { indent_size: 2 })
       );
       t.end();
@@ -29,8 +29,8 @@ fs.readdirSync(__dirname + '/templates')
 
 function getExpected (name, locals) {
   var expectedFile = __dirname + '/expected/' + name + '.hbs';
-  return fs.existsSync(expectedFile) ?
-    fs.readFileSync(expectedFile, 'utf8').trim() : runInJade(name, locals);
+  return fs.existsSync(expectedFile)
+    ? fs.readFileSync(expectedFile, 'utf8').trim() : runInJade(name, locals);
 }
 
 function getLocals (name) {
