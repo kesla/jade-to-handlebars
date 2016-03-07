@@ -5,7 +5,7 @@ var toHandlebars = require('../');
 var fs = require('fs');
 var path = require('path');
 var pkg = require(path.join(__dirname, '../package.json'));
-var paths = '';
+var paths = [];
 var outputDir;
 
 program
@@ -17,6 +17,10 @@ program
        paths = path;
     })
 	.parse(process.argv);
+
+if (paths.length === 0) {
+    paths.push(process.cwd());
+}
 
 if (program.out) {
     try {
