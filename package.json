@@ -1,6 +1,6 @@
 {
   "name": "jade-to-handlebars",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "convert jade templates to handlebars templates",
   "main": "index.js",
   "directories": {
